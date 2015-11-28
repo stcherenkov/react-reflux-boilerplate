@@ -23,6 +23,7 @@
     "babel-runtime": "^6.2.0",
     "css-loader": "^0.21.0",
     "gulp": "^3.9.0",
+    "gulp-eslint": "^1.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-svg-sprite": "^1.2.13",
     "gulp-util": "^3.0.6",
