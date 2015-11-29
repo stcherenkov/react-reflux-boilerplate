@@ -4,6 +4,10 @@ var gulp = require('gulp')
 var sequence = require('run-sequence')
 var path = require('path')
 
+gulp.config = {
+    destination: './build'
+}
+
 require('./gulp/webpack')(gulp)
 require('./gulp/svg-sprite')(gulp)
 require('./gulp/copy')(gulp)

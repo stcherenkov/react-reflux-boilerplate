@@ -13,43 +13,42 @@ var postcss = {
     autoprefixer: require('autoprefixer')
 }
 
-var config = {
-    context: path.resolve('./src/js'),
-    entry: {},
-    output: {
-        path: path.resolve('./build/'),
-        filename: '[name].js'
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015', 'react']
-                }
-            },
-            {
-                test:   /\.css$/,
-                loader: "style-loader!css-loader!postcss-loader"
-            }
-        ]
-    },
-    resolve: {
-        modulesDirectories: ['node_modules', 'core_modules'],
-        extensions: ['', '.jsx', '.js']
-    },
-    postcss: function () {
-        return {
-            defaults: [postcss.nested, postcss.autoprefixer]
-        }
-    },
-    plugins: []
-}
-
 module.exports = function (gulp) {
     var server = {}
+    var config = {
+        context: path.resolve('./src/js'),
+        entry: {},
+        output: {
+            path: path.resolve(gulp.config.destination),
+            filename: '[name].js'
+        },
+        module: {
+            loaders: [
+                {
+                    test: /\.jsx?$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['es2015', 'react']
+                    }
+                },
+                {
+                    test:   /\.css$/,
+                    loader: 'style-loader!css-loader!postcss-loader'
+                }
+            ]
+        },
+        resolve: {
+            modulesDirectories: ['node_modules', 'core_modules'],
+            extensions: ['', '.jsx', '.js']
+        },
+        postcss: function () {
+            return {
+                defaults: [postcss.nested, postcss.autoprefixer]
+            }
+        },
+        plugins: []
+    }
 
     /**
      * Adds vendor package-specific configuration
@@ -100,7 +99,7 @@ module.exports = function (gulp) {
         bundler = webpack(config)
 
         server.instance = new WebpackDevServer(bundler, {
-            contentBase: './build',
+            contentBase: gulp.config.destination,
             stats: {
                 chunks: false,
                 colors: true
@@ -128,9 +127,9 @@ module.exports = function (gulp) {
     gulp.task('webpack:production', function (callback) {
         config.plugins = config.plugins.concat([
             new webpack.DefinePlugin({
-                "process.env": {
+                'process.env': {
                     // This has effect on the react lib size
-                    "NODE_ENV": JSON.stringify("production")
+                    'NODE_ENV': JSON.stringify('production')
                 }
             }),
             new webpack.optimize.DedupePlugin(),
