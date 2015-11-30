@@ -29,6 +29,13 @@ module.exports = {
         semi: [1, 'never'],
         'eol-last': 1,
         camelcase: [2, { properties: 'always' }],
-        'block-spacing': [2, 'always']
-    }
+        'block-spacing': [2, 'always'],
+        'consistent-this': [2, 'that'],
+        'no-trailing-spaces': [2, { 'skipBlankLines': true }],
+        // React rules
+        'react/prefer-es6-class': 1
+    },
+    plugins: [
+        'react'
+    ]
 }
